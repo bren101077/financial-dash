@@ -90,6 +90,9 @@ if ticker:
         fig.add_trace(go.Scatter(x=chart_df['Date'], y=chart_df['RSI'], name='RSI', line=dict(color='#b400ff')), row=2, col=1)
         fig.add_trace(go.Scatter(x=chart_df['Date'], y=chart_df['ATR'], name='ATR', line=dict(color='yellow')), row=3, col=1)
 
+        fig.update_layout(height=800, template="plotly_dark", xaxis_rangeslider_visible=False)
+        st.plotly_chart(fig, use_container_width=True)
+
 if ticker:
     ticker1 = yf.Ticker(ticker)
     news = ticker1.news
@@ -110,6 +113,3 @@ if ticker:
             st.divider()
     else:
         st.write("No news found for this ticker.")
-
-        fig.update_layout(height=800, template="plotly_dark", xaxis_rangeslider_visible=False)
-        st.plotly_chart(fig, use_container_width=True)
