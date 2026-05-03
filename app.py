@@ -90,5 +90,26 @@ if ticker:
         fig.add_trace(go.Scatter(x=chart_df['Date'], y=chart_df['RSI'], name='RSI', line=dict(color='#b400ff')), row=2, col=1)
         fig.add_trace(go.Scatter(x=chart_df['Date'], y=chart_df['ATR'], name='ATR', line=dict(color='yellow')), row=3, col=1)
 
+if ticker:
+    ticker1 = yf.Ticker(ticker)
+    news = ticker1.news
+    
+    st.subheader(f"Latest News for {ticker}")
+    
+    if news:
+        for item in news:
+            # Extract content from the news dictionary
+            content = item.get('content', {})
+            title = content.get('title', 'No Title')
+            click_url_obj = content.get('clickThroughUrl') or {}
+            link = click_url_obj.get('url', '#')
+            
+            # Display news as markdown with a link
+            st.markdown(f"**[{title}]({link})**")
+            # st.write(f"Source: {provider}")
+            st.divider()
+    else:
+        st.write("No news found for this ticker.")
+
         fig.update_layout(height=800, template="plotly_dark", xaxis_rangeslider_visible=False)
         st.plotly_chart(fig, use_container_width=True)
